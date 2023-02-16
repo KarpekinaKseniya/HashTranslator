@@ -14,15 +14,15 @@ public class HelloService {
     private final HelloProperties properties;
 
     @Autowired
-    public HelloService(HelloProperties properties) {
+    public HelloService(final HelloProperties properties) {
         this.properties = properties;
     }
 
-    public String makeGreetingMessageFor(String name) {
+    public String makeGreetingMessageFor(final String name) {
         String instanceId = "unknown";
         try {
             instanceId = InetAddress.getLocalHost().getHostName();
-        } catch (UnknownHostException e) {
+        } catch (final UnknownHostException e) {
             log.warn("can't get hostname", e);
         }
         return String.format(properties.getTemplate(), name, instanceId);

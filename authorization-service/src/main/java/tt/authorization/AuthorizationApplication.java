@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 @SpringBootApplication
 @ConfigurationPropertiesScan("tt.authorization.config")
 public class AuthorizationApplication {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         SpringApplication.run(tt.authorization.AuthorizationApplication.class, args);
     }
 }
