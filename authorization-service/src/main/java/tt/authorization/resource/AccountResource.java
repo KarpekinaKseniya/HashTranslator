@@ -1,29 +1,116 @@
 package tt.authorization.resource;
 
-import org.apache.commons.lang3.NotImplementedException;
-import org.springframework.http.HttpStatus;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.ResponseEntity;
-import tt.authorization.domain.request.ResetPasswordRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import tt.authorization.domain.request.CreateUserRequest;
+import tt.authorization.domain.response.ErrorResponse;
 import tt.authorization.domain.response.UserInfoResponse;
 import tt.authorization.service.UserService;
 
-//TODO
+import javax.validation.Valid;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.ResponseEntity.ok;
+
+@RestController
+@RequestMapping("/api/v1/account")
 public class AccountResource {
-    private final UserService userService;
+  private final UserService userService;
 
-    public AccountResource(final UserService userService) {
-        this.userService = userService;
-    }
+  public AccountResource(final UserService userService) {
+    this.userService = userService;
+  }
 
-    public ResponseEntity<UserInfoResponse> getUserInfo(final Long id) {
-        throw new NotImplementedException();
-    }
+  @Operation(
+      summary = "Get User info by id",
+      description = "Endpoint for getting user info by id",
+      responses = {
+        @ApiResponse(responseCode = "200", description = "Ok"),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Bad Request",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Unauthorized",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Internal Server Error",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+      })
+  @GetMapping("/{id}")
+  @PreAuthorize("hasRole('ADMIN') or authentication.principal.id == #id")
+  public ResponseEntity<UserInfoResponse> getUserInfo(@PathVariable final Long id) {
+    return ok(userService.getUserInfo(id));
+  }
 
-    public ResponseEntity<HttpStatus> delete(final Long id) {
-        throw new NotImplementedException();
-    }
+  @Operation(
+      summary = "Delete user by ID",
+      description = "Endpoint for deleting user by ID",
+      responses = {
+        @ApiResponse(responseCode = "204", description = "Success"),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Bad Request",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Unauthorized",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Forbidden",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Not Found",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Internal Server Error",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+      })
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable final Long id) {
+    userService.delete(id);
+    return new ResponseEntity<>(NO_CONTENT);
+  }
 
-    public ResponseEntity<HttpStatus> changePassword(final ResetPasswordRequest resetPasswordRequest) {
-        throw new NotImplementedException();
-    }
+  @Operation(
+      summary = "Add new user",
+      description = "Endpoint for added user",
+      responses = {
+        @ApiResponse(responseCode = "201", description = "Created"),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Bad Request",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Unauthorized",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Forbidden",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "409",
+            description = "Conflict",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Internal Server Error",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+      })
+  @PostMapping
+  public ResponseEntity<Long> createUser(@Valid @RequestBody final CreateUserRequest request) {
+    return new ResponseEntity<>(userService.createUser(request), CREATED);
+  }
 }

@@ -1,32 +1,55 @@
 package tt.authorization.resource;
 
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tt.authorization.domain.request.LoginRequest;
-import tt.authorization.domain.request.RegistrationRequest;
+import tt.authorization.service.RefreshTokenService;
 import tt.authorization.service.UserService;
 
-//TODO
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import static org.springframework.http.HttpHeaders.SET_COOKIE;
+import static org.springframework.http.ResponseEntity.ok;
+
+@RestController
+@RequestMapping("api/v1/auth")
 public class AuthResource {
 
-    private final AuthenticationManager authenticationManager;
-    private final UserService userService;
+  private static final String LOGOUT_MESSAGE = "You've been sighed out!";
 
-    public AuthResource(final AuthenticationManager authenticationManager, final UserService userService) {
-        this.authenticationManager = authenticationManager;
-        this.userService = userService;
-    }
+  private final UserService userService;
+  private final RefreshTokenService refreshTokenService;
 
-    public ResponseEntity<?> auth(final LoginRequest request) {
-        throw new NotImplementedException();
-    }
+  public AuthResource(
+      final UserService userService, final RefreshTokenService refreshTokenService) {
+    this.userService = userService;
+    this.refreshTokenService = refreshTokenService;
+  }
 
-    public ResponseEntity<?> register(final RegistrationRequest request) {
-        throw new NotImplementedException();
-    }
+  @PostMapping("/login")
+  public ResponseEntity<Void> auth(@Valid @RequestBody final LoginRequest request) {
+    return ok().header(SET_COOKIE, userService.login(request))
+        .header(SET_COOKIE, refreshTokenService.createRefreshToken(request.getEmail()))
+        .build();
+  }
 
-    public ResponseEntity<?> logoutUser() {
-        throw new NotImplementedException();
-    }
+  @PostMapping("/logout")
+  public ResponseEntity<String> logoutUser() {
+    final Object principle = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    return ok().header(SET_COOKIE, userService.logout())
+        .header(SET_COOKIE, refreshTokenService.cleanRefreshToken(principle))
+        .body(LOGOUT_MESSAGE);
+  }
+
+  @PostMapping("/refreshtoken")
+  public ResponseEntity<String> refreshToken(final HttpServletRequest request) {
+    return ResponseEntity.ok()
+        .header(SET_COOKIE, refreshTokenService.findByToken(request))
+        .body("Token is refreshed successfully!");
+  }
 }

@@ -1,20 +1,15 @@
 package tt.authorization.repository;
 
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import tt.authorization.domain.entity.User;
 
-//TODO
-public interface UserRepository {
+import java.util.Optional;
 
-    Long save(User user);
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    void delete(Long id);
+  Optional<User> findByEmail(String email);
 
-    Optional<User> getById(Long id);
-
-    Optional<User> findByUsername(String username);
-
-    Boolean existsByUsername(String username);
-
-    Boolean existsByEmail(String email);
+  Boolean existsByEmail(String email);
 }
