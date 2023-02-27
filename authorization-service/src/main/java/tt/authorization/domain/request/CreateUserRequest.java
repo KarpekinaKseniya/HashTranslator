@@ -1,6 +1,7 @@
 package tt.authorization.domain.request;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import tt.authorization.domain.entity.ERole;
@@ -12,6 +13,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserRequest {

@@ -59,7 +59,7 @@ jacocoTestCoverageVerification {
                 value = 'COVEREDRATIO'
                 minimum = 0.8
             }
-            excludes = ["**/config/*", "**/domain/*"]
+            excludes = ["**/config/*", "**/domain/*", "**/AuthorizationApplication*.*"]
         }
     }
 }
@@ -68,7 +68,7 @@ jacocoTestReport {
     dependsOn test
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ["**/config/*", "**/domain/*"])
+            fileTree(dir: it, exclude: ["**/config/*", "**/domain/*", "**/AuthorizationApplication*.*"])
         }))
     }
 }

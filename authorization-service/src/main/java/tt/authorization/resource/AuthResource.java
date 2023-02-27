@@ -21,6 +21,7 @@ import static org.springframework.http.ResponseEntity.ok;
 public class AuthResource {
 
   private static final String LOGOUT_MESSAGE = "You've been sighed out!";
+  private static final String REFRESH_TOKEN_MESSAGE = "Token is refreshed successfully!";
 
   private final UserService userService;
   private final RefreshTokenService refreshTokenService;
@@ -50,6 +51,6 @@ public class AuthResource {
   public ResponseEntity<String> refreshToken(final HttpServletRequest request) {
     return ResponseEntity.ok()
         .header(SET_COOKIE, refreshTokenService.findByToken(request))
-        .body("Token is refreshed successfully!");
+        .body(REFRESH_TOKEN_MESSAGE);
   }
 }

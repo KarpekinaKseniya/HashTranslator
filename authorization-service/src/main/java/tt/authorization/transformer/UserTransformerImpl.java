@@ -20,17 +20,27 @@ public class UserTransformerImpl implements UserTransformer {
 
   @Override
   public User userRequestToEntity(final CreateUserRequest request, final Set<Roles> roles) {
+    if (request == null && roles == null) {
+      return null;
+    }
     User user = new User();
-    user.setFirstname(request.getFirstname());
-    user.setLastname(request.getLastname());
-    user.setEmail(request.getEmail());
-    user.setPassword(encoder.encode(request.getPassword()));
-    user.setRoles(roles);
+    if (request != null) {
+      user.setFirstname(request.getFirstname());
+      user.setLastname(request.getLastname());
+      user.setEmail(request.getEmail());
+      user.setPassword(encoder.encode(request.getPassword()));
+    }
+    if (roles != null) {
+      user.setRoles(roles);
+    }
     return user;
   }
 
   @Override
   public UserInfoResponse entityToResponse(final User user) {
+    if (user == null) {
+      return null;
+    }
     UserInfoResponse response = new UserInfoResponse();
     response.setFirstname(user.getFirstname());
     response.setLastname(user.getLastname());
