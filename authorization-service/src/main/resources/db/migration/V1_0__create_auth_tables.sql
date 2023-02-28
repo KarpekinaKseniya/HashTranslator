@@ -28,16 +28,3 @@ CREATE TABLE IF NOT EXISTS user_roles
     role_id BIGINT NOT NULL
         CONSTRAINT user_roles_roles_id_fk REFERENCES roles
 );
-
-CREATE TABLE IF NOT EXISTS refresh_token
-(
-    id          BIGSERIAL    NOT NULL
-        CONSTRAINT refresh_token_pk PRIMARY KEY,
-    user_id     BIGINT       NOT NULL
-        CONSTRAINT user_roles_user_id_fk REFERENCES users,
-    token       VARCHAR(255) NOT NULL,
-    expiry_date DATE         NOT NULL
-);
-
-CREATE UNIQUE INDEX token_id_uindex on refresh_token (id);
-CREATE UNIQUE INDEX token_uindex on refresh_token (token);

@@ -15,7 +15,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.request.WebRequest;
 import tt.authorization.domain.response.ErrorResponse;
 import tt.authorization.exception.EntityNotFoundException;
-import tt.authorization.exception.TokenRefreshException;
+import tt.authorization.exception.TokenException;
 
 import javax.validation.ConstraintViolationException;
 
@@ -134,7 +134,7 @@ class RestExceptionHandlerTest {
   @Test
   void handleTokenRefreshException() {
     final String token = "some_token";
-    final TokenRefreshException exception = new TokenRefreshException(token, ERROR_MESSAGE);
+    final TokenException exception = new TokenException(token, ERROR_MESSAGE);
 
     final ErrorResponse actual = handler.handleTokenRefreshException(exception, webRequest);
     assertThat(

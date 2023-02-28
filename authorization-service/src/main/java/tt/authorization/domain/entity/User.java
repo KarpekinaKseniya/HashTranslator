@@ -6,9 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,10 +26,10 @@ public class User {
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
-  @Size(max = 25)
+  @Column(length = 25)
   private String firstname;
 
-  @Size(max = 25)
+  @Column(length = 25)
   private String lastname;
 
   @ManyToMany(fetch = LAZY)
@@ -42,12 +39,7 @@ public class User {
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Roles> roles = new HashSet<>();
 
-  @NotBlank
-  @Size(max = 30)
-  @Email
   private String email;
 
-  @NotBlank
-  @Size(max = 150)
   private String password;
 }

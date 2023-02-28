@@ -1,5 +1,14 @@
 package tt.authorization.exception.handler;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+
+import java.util.stream.Collectors;
+import javax.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,12 +20,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import tt.authorization.domain.response.ErrorResponse;
 import tt.authorization.exception.EntityNotFoundException;
-import tt.authorization.exception.TokenRefreshException;
-
-import javax.validation.ConstraintViolationException;
-import java.util.stream.Collectors;
-
-import static org.springframework.http.HttpStatus.*;
+import tt.authorization.exception.TokenException;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
@@ -77,17 +81,17 @@ public class RestExceptionHandler {
         CONFLICT.value(), ex.getCause().getMessage(), request.getDescription(false));
   }
 
+  @ExceptionHandler(value = TokenException.class)
+  @ResponseStatus(FORBIDDEN)
+  public ErrorResponse handleTokenRefreshException(
+          final TokenException ex, final WebRequest request) {
+    return new ErrorResponse(FORBIDDEN.value(), ex.getMessage(), request.getDescription(false));
+  }
+
   @ExceptionHandler
   @ResponseStatus(value = INTERNAL_SERVER_ERROR)
   public ErrorResponse handleGlobalException(final Exception ex, final WebRequest request) {
     return new ErrorResponse(
         INTERNAL_SERVER_ERROR.value(), ex.getMessage(), request.getDescription(false));
-  }
-
-  @ExceptionHandler(value = TokenRefreshException.class)
-  @ResponseStatus(FORBIDDEN)
-  public ErrorResponse handleTokenRefreshException(
-      final TokenRefreshException ex, final WebRequest request) {
-    return new ErrorResponse(FORBIDDEN.value(), ex.getMessage(), request.getDescription(false));
   }
 }

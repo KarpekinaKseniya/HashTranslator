@@ -12,7 +12,4 @@ public interface UserService {
 
   Long createUser(CreateUserRequest request);
 
-  String login(LoginRequest request);
-
-  String logout();
 }
