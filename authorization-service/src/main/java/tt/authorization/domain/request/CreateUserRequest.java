@@ -8,6 +8,7 @@ import tt.authorization.domain.entity.ERole;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -18,21 +19,20 @@ import java.util.Set;
 @AllArgsConstructor
 public class CreateUserRequest {
 
-  @Size(max = 25)
+  @Size(max = 25, message = "Firstname size must be between 0 and 25")
   private String firstname;
 
-  @Size(max = 25)
+  @Size(max = 25, message = "Lastname size must be between 0 and 25")
   private String lastname;
 
   private Set<ERole> role;
 
-  @NotBlank
-  @Size(max = 30)
+  @NotBlank(message = "Email must not be blank")
   @Email
   private String email;
 
-  @NotBlank
-  @Size(max = 60)
+  @NotNull(message = "Password must not be null")
+  @Size(max = 60, message = "Password size must be between 0 and 60")
   @Pattern(
       regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$",
       message =

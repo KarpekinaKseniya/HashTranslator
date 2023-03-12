@@ -1,14 +1,5 @@
 package tt.authorization.exception.handler;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.CONFLICT;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-
-import java.util.stream.Collectors;
-import javax.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +12,16 @@ import org.springframework.web.context.request.WebRequest;
 import tt.authorization.domain.response.ErrorResponse;
 import tt.authorization.exception.EntityNotFoundException;
 import tt.authorization.exception.TokenException;
+
+import javax.validation.ConstraintViolationException;
+import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RestControllerAdvice
 public class RestExceptionHandler {

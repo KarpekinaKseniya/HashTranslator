@@ -1,10 +1,5 @@
 package tt.authorization.resource;
 
-import static org.springframework.http.HttpHeaders.SET_COOKIE;
-import static org.springframework.http.ResponseEntity.ok;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tt.authorization.domain.request.LoginRequest;
 import tt.authorization.service.TokenService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import static org.springframework.http.HttpHeaders.SET_COOKIE;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("api/v1/auth")

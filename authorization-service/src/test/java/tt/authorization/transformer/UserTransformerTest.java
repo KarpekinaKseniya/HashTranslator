@@ -23,7 +23,12 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.only;
 import static org.mockito.MockitoAnnotations.openMocks;
-import static tt.authorization.helper.UserHelper.*;
+import static tt.authorization.helper.UserHelper.DEFAULT_PASSWORD;
+import static tt.authorization.helper.UserHelper.ENCODE_PASSWORD;
+import static tt.authorization.helper.UserHelper.createUserRequest;
+import static tt.authorization.helper.UserHelper.defaultRole;
+import static tt.authorization.helper.UserHelper.userEntityBuilder;
+import static tt.authorization.helper.UserHelper.userInfoResponse;
 
 class UserTransformerTest {
 

@@ -1,7 +1,6 @@
 package tt.authorization.service;
 
 import tt.authorization.domain.request.CreateUserRequest;
-import tt.authorization.domain.request.LoginRequest;
 import tt.authorization.domain.response.UserInfoResponse;
 
 public interface UserService {

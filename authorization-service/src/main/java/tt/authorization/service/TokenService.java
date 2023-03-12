@@ -1,7 +1,8 @@
 package tt.authorization.service;
 
-import javax.servlet.http.HttpServletRequest;
 import tt.authorization.domain.request.LoginRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 public interface TokenService {
 

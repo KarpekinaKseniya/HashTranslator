@@ -15,8 +15,8 @@ public class UserHelper {
   public static String DEFAULT_PASSWORD = "password";
   public static String ENCODE_PASSWORD =
       "$2a$10$r.ctB43XcviDPD0trfxdUeo7vag/N2JqnHGtXm7/sBmXjn567MEEm";
+  public static String JONNY_EMAIL = "test@gmail.ru";
 
-  private static String JONNY_EMAIL = "test@gmail.ru";
   private static String JONNY_FIRSTNAME = "John";
   private static String JONNY_LASTNAME = "Test";
 

@@ -1,11 +1,5 @@
 package tt.authorization.service;
 
-import static java.lang.String.format;
-
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 import tt.authorization.domain.entity.ERole;
 import tt.authorization.domain.entity.Roles;
@@ -17,6 +11,12 @@ import tt.authorization.repository.RoleRepository;
 import tt.authorization.repository.UserRepository;
 import tt.authorization.transformer.UserTransformer;
 
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import static java.lang.String.format;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -24,14 +24,12 @@ public class UserServiceImpl implements UserService {
     private static final String ROLE_NOT_FOUND_ERROR = "Role with name = %s didn't found.";
     private final UserRepository userRepository;
     private final UserTransformer userTransformer;
-    private final AuthenticationManager authenticationManager;
     private final RoleRepository roleRepository;
 
     public UserServiceImpl(final UserRepository userRepository, final UserTransformer userTransformerImpl,
-            final AuthenticationManager authenticationManager, final RoleRepository roleRepository) {
+                           final RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.userTransformer = userTransformerImpl;
-        this.authenticationManager = authenticationManager;
         this.roleRepository = roleRepository;
     }
 

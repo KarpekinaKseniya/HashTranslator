@@ -42,7 +42,11 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
 
+    testRuntimeOnly "org.hsqldb:hsqldb"
+
+    testImplementation "io.rest-assured:rest-assured"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "net.javacrumbs.json-unit:json-unit:2.36.0"
 }
 
 test {

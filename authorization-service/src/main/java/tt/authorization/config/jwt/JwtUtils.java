@@ -1,17 +1,18 @@
 package tt.authorization.config.jwt;
 
-import java.text.ParseException;
-import java.util.Date;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
+import io.jsonwebtoken.lang.Assert;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
-import com.nimbusds.jwt.JWTClaimsSet;
-import com.nimbusds.jwt.SignedJWT;
-import io.jsonwebtoken.lang.Assert;
 import tt.authorization.exception.TokenException;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.util.Date;
 
 @Component
 public class JwtUtils {
@@ -23,8 +24,8 @@ public class JwtUtils {
     private final int jwtCookieAgeSec;
 
     public JwtUtils(@Value("${app.jwtCookieName}") final String jwtCookie,
-            @Value("${app.jwtRefreshCookieName}") final String jwtRefreshCookie,
-            @Value("${app.jwtCookieAgeSec}") final int jwtCookieAgeSec) {
+                    @Value("${app.jwtRefreshCookieName}") final String jwtRefreshCookie,
+                    @Value("${app.jwtCookieAgeSec}") final int jwtCookieAgeSec) {
         this.jwtCookie = jwtCookie;
         this.jwtRefreshCookie = jwtRefreshCookie;
         this.jwtCookieAgeSec = jwtCookieAgeSec;
@@ -43,11 +44,11 @@ public class JwtUtils {
     }
 
     public ResponseCookie cleanAccessToken() {
-        return ResponseCookie.from(jwtCookie, null).path(API).build();
+        return ResponseCookie.from(jwtCookie, null).maxAge(0).path(API).build();
     }
 
     public ResponseCookie cleanRefreshToken() {
-        return ResponseCookie.from(jwtRefreshCookie, null).path(REFRESH_API).build();
+        return ResponseCookie.from(jwtRefreshCookie, null).maxAge(0).path(REFRESH_API).build();
     }
 
     public String getUserNameFromJwtToken(final String token) {
