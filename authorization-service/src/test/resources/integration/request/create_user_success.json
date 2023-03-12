@@ -1,0 +1,9 @@
+{
+  "firstname": "John",
+  "lastname": "Test",
+  "email": "test2@gmail.ru",
+  "password": "tYkwa1!#4",
+  "role": [
+    "ROLE_USER"
+  ]
+}

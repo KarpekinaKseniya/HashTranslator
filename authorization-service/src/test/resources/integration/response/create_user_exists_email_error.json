@@ -1,0 +1,5 @@
+{
+  "statusCode": 400,
+  "message": "Error: email is already in use!",
+  "description": "uri=/api/v1/account"
+}

@@ -1,0 +1,5 @@
+{
+  "statusCode": 404,
+  "message": "User with id = 110 didn't found.",
+  "description": "uri=/api/v1/account/110"
+}ó

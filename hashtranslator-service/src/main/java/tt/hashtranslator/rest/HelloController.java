@@ -15,12 +15,12 @@ public class HelloController {
     private final HelloService helloService;
 
     @Autowired
-    public HelloController(HelloService helloService) {
+    public HelloController(final HelloService helloService) {
         this.helloService = helloService;
     }
 
     @GetMapping
-    public String printGreeting(@RequestParam(name = "name", required = false, defaultValue = "World") String name) {
+    public String printGreeting(@RequestParam(name = "name", required = false, defaultValue = "World")final String name) {
         log.info("greeting for {}", name);
         return helloService.makeGreetingMessageFor(name);
     }
