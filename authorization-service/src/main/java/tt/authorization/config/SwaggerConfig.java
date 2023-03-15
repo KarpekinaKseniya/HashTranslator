@@ -23,6 +23,6 @@ public class SwaggerConfig {
 
     @Bean
     public Info info() {
-        return new Info().title("Hash Translator API").version("v1").description("Contain solution on testing task");
+        return new Info().title("Authorization API").version("v1").description("Contain solution on testing task");
     }
 }

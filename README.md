@@ -23,7 +23,8 @@ Content-Type: application/json
   "hashes": [
     "c4ca4238a0b923820dcc509a6f75849b",
     "c81e728d9d4c2f636f067f89cc14862c",
-    "eccbc87e4b5ce2fe28308fd9f2a7baf3"
+    "eccbc87e4b5ce2fe28308fd9f2a7baf3",
+    "AB4F63F9AC65152575886860DDE480A1"
   ]
 }
 ```

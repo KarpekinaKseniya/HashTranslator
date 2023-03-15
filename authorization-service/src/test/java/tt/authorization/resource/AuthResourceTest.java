@@ -49,7 +49,7 @@ class AuthResourceTest {
     given(tokenService.generateAccessToken(loginRequest())).willReturn(accessToken);
     given(tokenService.generateRefreshToken(loginRequest().getEmail())).willReturn(refreshToken);
 
-    final ResponseEntity<Void> actual = authResource.auth(loginRequest());
+    final ResponseEntity<Void> actual = authResource.login(loginRequest());
     assertThat(
         actual, is(ok().header(SET_COOKIE, accessToken).header(SET_COOKIE, refreshToken).build()));
 

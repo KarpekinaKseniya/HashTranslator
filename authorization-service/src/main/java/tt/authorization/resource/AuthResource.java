@@ -18,28 +18,32 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("api/v1/auth")
 public class AuthResource {
 
-    private static final String LOGOUT_MESSAGE = "You've been sighed out!";
-    private static final String REFRESH_TOKEN_MESSAGE = "Token is refreshed successfully!";
-    private final TokenService tokenService;
+  private static final String LOGOUT_MESSAGE = "You've been sighed out!";
+  private static final String REFRESH_TOKEN_MESSAGE = "Token is refreshed successfully!";
+  private final TokenService tokenService;
 
-    public AuthResource(final TokenService tokenService) {
-        this.tokenService = tokenService;
-    }
+  public AuthResource(final TokenService tokenService) {
+    this.tokenService = tokenService;
+  }
 
-    @PostMapping("/login")
-    public ResponseEntity<Void> auth(@Valid @RequestBody final LoginRequest request) {
-        return ok().header(SET_COOKIE, tokenService.generateAccessToken(request))
-                .header(SET_COOKIE, tokenService.generateRefreshToken(request.getEmail())).build();
-    }
+  @PostMapping("/login")
+  public ResponseEntity<Void> login(@Valid @RequestBody final LoginRequest request) {
+    return ok().header(SET_COOKIE, tokenService.generateAccessToken(request))
+        .header(SET_COOKIE, tokenService.generateRefreshToken(request.getEmail()))
+        .build();
+  }
 
-    @PostMapping("/logout")
-    public ResponseEntity<String> logoutUser() {
-        return ok().header(SET_COOKIE, tokenService.cleanAccessToken())
-                .header(SET_COOKIE, tokenService.cleanRefreshToken()).body(LOGOUT_MESSAGE);
-    }
+  @PostMapping("/logout")
+  public ResponseEntity<String> logoutUser() {
+    return ok().header(SET_COOKIE, tokenService.cleanAccessToken())
+        .header(SET_COOKIE, tokenService.cleanRefreshToken())
+        .body(LOGOUT_MESSAGE);
+  }
 
-    @PostMapping("/token/refresh")
-    public ResponseEntity<String> refreshToken(final HttpServletRequest request) {
-        return ResponseEntity.ok().header(SET_COOKIE, tokenService.findByToken(request)).body(REFRESH_TOKEN_MESSAGE);
-    }
+  @PostMapping("/token/refresh")
+  public ResponseEntity<String> refreshToken(final HttpServletRequest request) {
+    return ResponseEntity.ok()
+        .header(SET_COOKIE, tokenService.findByToken(request))
+        .body(REFRESH_TOKEN_MESSAGE);
+  }
 }

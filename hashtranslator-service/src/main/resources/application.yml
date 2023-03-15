@@ -1,3 +1,34 @@
 spring:
   application:
     name: hash-translator
+  data:
+    mongodb:
+      database: ${DB_NAME:testdb}
+      uri: ${DB_URI:mongodb://user:test@localhost:27017}
+server:
+  port: ${PORT:8085}
+decoder:
+  url: ${DECODER_URI:https://md5.opiums.eu}
+  read:
+    timeout:
+      sec: ${DECODER_READ_TIMEOUT_SEC:60}
+  write:
+    timeout:
+      sec: ${DECODER_WRITE_TIMEOUT_SEC:60}
+  connect:
+    timeout:
+      ms: ${DECODER_CONNECT_TIMEOUT_MS:60000}
+hash:
+  type: ${HASH_TYPE:md5}
+  path: ${HASH_PATH:/api.php}
+auth:
+  service:
+    url: ${AUTH_URL:http://authorization-service:8080/api/v1/auth}
+
+springdoc:
+  packages-to-scan: tt.hashtranslator.resource
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true

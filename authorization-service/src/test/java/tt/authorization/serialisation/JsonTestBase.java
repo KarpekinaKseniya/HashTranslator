@@ -54,7 +54,7 @@ abstract class JsonTestBase<T> {
 
   private void assertJson(final String actualJson, final String expectedJsonFile)
       throws IOException {
-    final String expectedJson = readFileAsString(expectedJsonFile);
+    final String expectedJson = readFileAsString(expectedJsonFile).replaceAll("\\r", "");
 
     assertThat("JSON strings did not match", actualJson, is(expectedJson));
   }

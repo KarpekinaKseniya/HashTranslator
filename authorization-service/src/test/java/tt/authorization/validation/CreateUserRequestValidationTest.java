@@ -63,7 +63,7 @@ class CreateUserRequestValidationTest {
 
   @Test
   void shouldReturnErrorWhenInvalidSizeOfPassword() {
-    final CreateUserRequest request = getCreateUserRequest().password(BIG_STRING).build();
+    final CreateUserRequest request = getCreateUserRequest().password(BIG_STRING + "Tyk1:21@1!de").build();
     final Set<ConstraintViolation<CreateUserRequest>> violations = validator.validate(request);
     final String errorMessage = violations.iterator().next().getMessage();
 
