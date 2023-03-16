@@ -1,9 +1,9 @@
 package tt.authorization.serialisation;
 
+import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
+
 import org.junit.jupiter.api.BeforeEach;
 import tt.authorization.domain.response.ErrorResponse;
-
-import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
 
 public class ErrorResponseSerialisationTest extends JsonTestBase<ErrorResponse> {
 

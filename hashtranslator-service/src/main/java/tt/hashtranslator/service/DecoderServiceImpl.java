@@ -1,5 +1,12 @@
 package tt.hashtranslator.service;
 
+import static java.util.Objects.nonNull;
+import static java.util.stream.Collectors.toList;
+import static org.springframework.http.HttpStatus.OK;
+import static reactor.core.publisher.Mono.just;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -8,14 +15,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import tt.hashtranslator.domain.entity.Application;
 import tt.hashtranslator.repository.ApplicationRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Objects.nonNull;
-import static java.util.stream.Collectors.toList;
-import static org.springframework.http.HttpStatus.OK;
-import static reactor.core.publisher.Mono.just;
 
 @Service
 public class DecoderServiceImpl implements DecoderService {
@@ -32,8 +31,8 @@ public class DecoderServiceImpl implements DecoderService {
   public DecoderServiceImpl(
       @Value("${hash.type}") final String hashType,
       @Value("${hash.path}") final String hasPath,
-      ApplicationRepository applicationRepository,
-      WebClient hashDecoderClient) {
+      final ApplicationRepository applicationRepository,
+      final WebClient hashDecoderClient) {
     this.hashType = hashType;
     this.hasPath = hasPath;
     this.applicationRepository = applicationRepository;

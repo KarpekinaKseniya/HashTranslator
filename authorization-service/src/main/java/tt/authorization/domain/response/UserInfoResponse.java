@@ -1,12 +1,11 @@
 package tt.authorization.domain.response;
 
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import tt.authorization.domain.entity.Roles;
-
-import java.util.Set;
 
 @Data
 @Builder

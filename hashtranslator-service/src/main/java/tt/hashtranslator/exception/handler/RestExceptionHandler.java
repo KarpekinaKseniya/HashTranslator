@@ -1,26 +1,23 @@
-package tt.authorization.exception.handler;
+package tt.hashtranslator.exception.handler;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import tt.authorization.domain.response.ErrorResponse;
-import tt.authorization.exception.EntityNotFoundException;
-import tt.authorization.exception.TokenException;
+import tt.hashtranslator.domain.response.ErrorResponse;
+import tt.hashtranslator.exception.AuthClientException;
+import tt.hashtranslator.exception.EntityNotFoundException;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
@@ -52,20 +49,6 @@ public class RestExceptionHandler {
     return new ErrorResponse(BAD_REQUEST.value(), ex.getMessage(), request.getDescription(false));
   }
 
-  @ExceptionHandler
-  @ResponseStatus(value = UNAUTHORIZED)
-  public ErrorResponse handleUsernameNotFoundException(
-      final UsernameNotFoundException ex, final WebRequest request) {
-    return new ErrorResponse(UNAUTHORIZED.value(), ex.getMessage(), request.getDescription(false));
-  }
-
-  @ExceptionHandler
-  @ResponseStatus(value = UNAUTHORIZED)
-  public ErrorResponse handleAuthenticationException(
-      final AuthenticationException ex, final WebRequest request) {
-    return new ErrorResponse(UNAUTHORIZED.value(), ex.getMessage(), request.getDescription(false));
-  }
-
   @ExceptionHandler({EntityNotFoundException.class})
   @ResponseStatus(value = NOT_FOUND)
   public ErrorResponse handleEntityNotFoundException(
@@ -81,11 +64,11 @@ public class RestExceptionHandler {
         CONFLICT.value(), ex.getCause().getMessage(), request.getDescription(false));
   }
 
-  @ExceptionHandler({TokenException.class})
-  @ResponseStatus(FORBIDDEN)
+  @ExceptionHandler({AuthClientException.class})
+  @ResponseStatus(value = FORBIDDEN)
   public ErrorResponse handleTokenRefreshException(
-          final TokenException ex, final WebRequest request) {
-    return new ErrorResponse(FORBIDDEN.value(), ex.getMessage(), request.getDescription(false));
+      final AuthClientException ex, final WebRequest request) {
+    return new ErrorResponse(ex.getStatusCode(), ex.getMessage(), request.getDescription(false));
   }
 
   @ExceptionHandler

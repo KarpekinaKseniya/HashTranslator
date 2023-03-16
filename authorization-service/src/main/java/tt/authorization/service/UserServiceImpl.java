@@ -1,5 +1,10 @@
 package tt.authorization.service;
 
+import static java.lang.String.format;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import tt.authorization.domain.entity.ERole;
 import tt.authorization.domain.entity.Roles;
@@ -10,12 +15,6 @@ import tt.authorization.exception.EntityNotFoundException;
 import tt.authorization.repository.RoleRepository;
 import tt.authorization.repository.UserRepository;
 import tt.authorization.transformer.UserTransformer;
-
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
-import static java.lang.String.format;
 
 @Service
 public class UserServiceImpl implements UserService {

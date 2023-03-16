@@ -1,13 +1,12 @@
 package tt.authorization.service.auth;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import tt.authorization.domain.entity.User;
+import static java.util.stream.Collectors.toList;
 
 import java.util.Collection;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import tt.authorization.domain.entity.User;
 
 public class UserDetailsImpl extends org.springframework.security.core.userdetails.User {
 

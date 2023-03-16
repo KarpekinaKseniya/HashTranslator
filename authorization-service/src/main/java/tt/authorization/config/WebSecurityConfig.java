@@ -1,5 +1,10 @@
 package tt.authorization.config;
 
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -26,76 +31,72 @@ import tt.authorization.config.jwt.AuthTokenFilter;
 import tt.authorization.config.jwt.JwtUtils;
 import tt.authorization.service.auth.UserDetailsServiceImpl;
 
-import static org.springframework.http.HttpMethod.DELETE;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
 
-    private static final String API = "/api/v1";
-    private static final String ALL_ROLES = "hasRole('ADMIN') or hasRole('USER')";
-    private static final String ADMIN_ROLE = "hasRole('ADMIN')";
+  private static final String API = "/api/v1";
+  private static final String ALL_ROLES = "hasRole('ADMIN') or hasRole('USER')";
+  private static final String ADMIN_ROLE = "hasRole('ADMIN')";
 
-    private final RsaProperties rsaKeys;
-    private final JwtUtils jwtUtils;
-    private final UserDetailsServiceImpl userDetailsService;
+  private final RsaProperties rsaKeys;
+  private final JwtUtils jwtUtils;
+  private final UserDetailsServiceImpl userDetailsService;
 
-    public WebSecurityConfig(final RsaProperties rsaKeys, final JwtUtils jwtUtils,
-            final UserDetailsServiceImpl userDetailsService) {
-        this.rsaKeys = rsaKeys;
-        this.jwtUtils = jwtUtils;
-        this.userDetailsService = userDetailsService;
-    }
+  public WebSecurityConfig(final RsaProperties rsaKeys, final JwtUtils jwtUtils,
+      final UserDetailsServiceImpl userDetailsService) {
+    this.rsaKeys = rsaKeys;
+    this.jwtUtils = jwtUtils;
+    this.userDetailsService = userDetailsService;
+  }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public BCryptPasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public AuthenticationManager authManager() {
-        var authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return new ProviderManager(authProvider);
-    }
+  @Bean
+  public AuthenticationManager authManager() {
+    final var authProvider = new DaoAuthenticationProvider();
+    authProvider.setUserDetailsService(userDetailsService);
+    authProvider.setPasswordEncoder(passwordEncoder());
+    return new ProviderManager(authProvider);
+  }
 
-    @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter(jwtUtils, userDetailsService);
-    }
+  @Bean
+  public AuthTokenFilter authenticationJwtTokenFilter() {
+    return new AuthTokenFilter(jwtUtils, userDetailsService);
+  }
 
-    @Bean
-    JwtEncoder jwtEncoder() {
-        JWK jwk = new RSAKey.Builder(rsaKeys.getPublicKey()).privateKey(rsaKeys.getPrivateKey()).build();
-        JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(new JWKSet(jwk));
-        return new NimbusJwtEncoder(jwkSource);
-    }
+  @Bean
+  JwtEncoder jwtEncoder() {
+    final JWK jwk = new RSAKey.Builder(rsaKeys.getPublicKey()).privateKey(rsaKeys.getPrivateKey())
+        .build();
+    final JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(new JWKSet(jwk));
+    return new NimbusJwtEncoder(jwkSource);
+  }
 
-    @Bean
-    JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey(rsaKeys.getPublicKey()).build();
-    }
+  @Bean
+  JwtDecoder jwtDecoder() {
+    return NimbusJwtDecoder.withPublicKey(rsaKeys.getPublicKey()).build();
+  }
 
-    @Bean
-    public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
-        //@formatter:off
-        http.cors(CorsConfigurer::disable)
-                .csrf(CsrfConfigurer::disable).
-                        authorizeRequests(
-                        auth -> auth.antMatchers(API + "/auth/**").permitAll()
-                                .antMatchers(GET, API + "/account/{\\d+}").access(ALL_ROLES)
-                                .antMatchers(DELETE, API + "/account/{\\d+}").access(ADMIN_ROLE)
-                                .antMatchers(POST, API + "/account").access(ADMIN_ROLE)
-                                .antMatchers("/swagger-ui-custom.html", "/swagger-ui.html", "/swagger-ui/**",
-                                        "/v3/api-docs/**", "/webjars/**", "/swagger-ui/index.html", "/api-docs/**").permitAll()
-                                .anyRequest().authenticated())
-                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
-                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-        //@formatter:on
-        return http.build();
-    }
+  @Bean
+  public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
+    http.cors(CorsConfigurer::disable)
+        .csrf(CsrfConfigurer::disable).
+        authorizeRequests(
+            auth -> auth.antMatchers(API + "/auth/**").permitAll()
+                .antMatchers(GET, API + "/account/{\\d+}").access(ALL_ROLES)
+                .antMatchers(DELETE, API + "/account/{\\d+}").access(ADMIN_ROLE)
+                .antMatchers(POST, API + "/account").access(ADMIN_ROLE)
+                .antMatchers("/swagger-ui-custom.html", "/swagger-ui.html", "/swagger-ui/**",
+                    "/v3/api-docs/**", "/webjars/**", "/swagger-ui/index.html", "/api-docs/**")
+                .permitAll()
+                .anyRequest().authenticated())
+        .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+        .addFilterBefore(authenticationJwtTokenFilter(),
+            UsernamePasswordAuthenticationFilter.class);
+    return http.build();
+  }
 }

@@ -1,12 +1,12 @@
 package tt.authorization.config;
 
+import static java.util.Arrays.asList;
+
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import static java.util.Arrays.asList;
 
 @Configuration
 public class SwaggerConfig {

@@ -1,13 +1,12 @@
 package tt.hashtranslator.transformer;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Component;
 import tt.hashtranslator.domain.entity.Application;
 import tt.hashtranslator.domain.request.ApplicationRequest;
 import tt.hashtranslator.domain.response.ApplicationResponse;
 import tt.hashtranslator.domain.response.HashResponse;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class ApplicationTransformerImpl implements ApplicationTransformer {

@@ -1,5 +1,15 @@
 package tt.authorization.repository;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static tt.authorization.helper.UserHelper.JONNY_EMAIL;
+import static tt.authorization.helper.UserHelper.userEntityBuilder;
+
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,17 +19,6 @@ import org.springframework.test.context.jdbc.Sql;
 import tt.authorization.AuthorizationApplication;
 import tt.authorization.domain.entity.User;
 import tt.authorization.integration_tests.config.HSQLConfig;
-
-import java.util.Optional;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static tt.authorization.helper.UserHelper.JONNY_EMAIL;
-import static tt.authorization.helper.UserHelper.userEntityBuilder;
 
 @Import(HSQLConfig.class)
 @SpringBootTest(

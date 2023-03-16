@@ -1,5 +1,7 @@
 package tt.hashtranslator.service;
 
+import static java.lang.String.format;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tt.hashtranslator.domain.entity.Application;
@@ -8,8 +10,6 @@ import tt.hashtranslator.domain.response.ApplicationResponse;
 import tt.hashtranslator.exception.EntityNotFoundException;
 import tt.hashtranslator.repository.ApplicationRepository;
 import tt.hashtranslator.transformer.ApplicationTransformer;
-
-import static java.lang.String.format;
 
 @Service
 public class ApplicationServiceImpl implements ApplicationService {

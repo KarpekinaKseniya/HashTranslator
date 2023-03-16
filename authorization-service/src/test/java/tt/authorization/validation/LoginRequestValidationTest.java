@@ -1,18 +1,5 @@
 package tt.authorization.validation;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.ValueSource;
-import tt.authorization.domain.request.LoginRequest;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import java.util.Set;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -20,6 +7,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static tt.authorization.helper.UserHelper.DEFAULT_PASSWORD;
 import static tt.authorization.helper.UserHelper.JONNY_EMAIL;
 import static tt.authorization.helper.UserHelper.loginRequest;
+
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
+import tt.authorization.domain.request.LoginRequest;
 
 class LoginRequestValidationTest {
 

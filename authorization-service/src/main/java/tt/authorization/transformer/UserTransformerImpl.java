@@ -1,13 +1,12 @@
 package tt.authorization.transformer;
 
+import java.util.Set;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import tt.authorization.domain.entity.Roles;
 import tt.authorization.domain.entity.User;
 import tt.authorization.domain.request.CreateUserRequest;
 import tt.authorization.domain.response.UserInfoResponse;
-
-import java.util.Set;
 
 @Component
 public class UserTransformerImpl implements UserTransformer {

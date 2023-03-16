@@ -1,5 +1,7 @@
 package tt.hashtranslator.config;
 
+import static io.netty.channel.ChannelOption.CONNECT_TIMEOUT_MILLIS;
+
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,8 +12,6 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
-
-import static io.netty.channel.ChannelOption.CONNECT_TIMEOUT_MILLIS;
 
 @Configuration
 public class DecoderConfig {

@@ -1,18 +1,17 @@
 package tt.authorization.serialisation;
 
+import static com.fasterxml.jackson.core.JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.function.Supplier;
-
-import static com.fasterxml.jackson.core.JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 abstract class JsonTestBase<T> {
 
@@ -59,7 +58,7 @@ abstract class JsonTestBase<T> {
     assertThat("JSON strings did not match", actualJson, is(expectedJson));
   }
 
-  private String readFileAsString(String file) throws IOException {
+  private String readFileAsString(final String file) throws IOException {
     return new String(Files.readAllBytes(Paths.get(FILE_PATH + file)));
   }
 }

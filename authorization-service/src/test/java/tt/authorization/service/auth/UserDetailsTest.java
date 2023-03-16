@@ -1,17 +1,16 @@
 package tt.authorization.service.auth;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import java.util.Set;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static tt.authorization.domain.entity.ERole.ROLE_USER;
 import static tt.authorization.helper.UserHelper.ENCODE_PASSWORD;
 import static tt.authorization.helper.UserHelper.JONNY_EMAIL;
 import static tt.authorization.helper.UserHelper.userEntityBuilder;
+
+import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 class UserDetailsTest {
 
