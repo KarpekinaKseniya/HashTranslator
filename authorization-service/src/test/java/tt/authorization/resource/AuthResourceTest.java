@@ -1,15 +1,5 @@
 package tt.authorization.resource;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.http.ResponseEntity;
-import tt.authorization.service.TokenService;
-
-import javax.servlet.http.HttpServletRequest;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -22,6 +12,15 @@ import static org.mockito.MockitoAnnotations.openMocks;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 import static org.springframework.http.ResponseEntity.ok;
 import static tt.authorization.helper.UserHelper.loginRequest;
+
+import javax.servlet.http.HttpServletRequest;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.http.ResponseEntity;
+import tt.authorization.service.TokenService;
 
 class AuthResourceTest {
 
@@ -49,7 +48,7 @@ class AuthResourceTest {
     given(tokenService.generateAccessToken(loginRequest())).willReturn(accessToken);
     given(tokenService.generateRefreshToken(loginRequest().getEmail())).willReturn(refreshToken);
 
-    final ResponseEntity<Void> actual = authResource.auth(loginRequest());
+    final ResponseEntity<Void> actual = authResource.login(loginRequest());
     assertThat(
         actual, is(ok().header(SET_COOKIE, accessToken).header(SET_COOKIE, refreshToken).build()));
 

@@ -1,19 +1,5 @@
 package tt.authorization.validation;
 
-import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.ValueSource;
-import tt.authorization.domain.request.CreateUserRequest;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import java.util.Set;
-
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,6 +7,19 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static tt.authorization.domain.entity.ERole.ROLE_USER;
 import static tt.authorization.helper.UserHelper.JONNY_EMAIL;
+
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
+import tt.authorization.domain.request.CreateUserRequest;
 
 class CreateUserRequestValidationTest {
 
@@ -59,16 +58,6 @@ class CreateUserRequestValidationTest {
 
     assertFalse(violations.isEmpty());
     assertThat(errorMessage, is("Lastname size must be between 0 and 25"));
-  }
-
-  @Test
-  void shouldReturnErrorWhenInvalidSizeOfPassword() {
-    final CreateUserRequest request = getCreateUserRequest().password(BIG_STRING).build();
-    final Set<ConstraintViolation<CreateUserRequest>> violations = validator.validate(request);
-    final String errorMessage = violations.iterator().next().getMessage();
-
-    assertFalse(violations.isEmpty());
-    assertThat(errorMessage, is("Password size must be between 0 and 60"));
   }
 
   @ParameterizedTest

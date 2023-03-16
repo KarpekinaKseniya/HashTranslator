@@ -1,18 +1,5 @@
 package tt.authorization.service;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import tt.authorization.domain.response.UserInfoResponse;
-import tt.authorization.exception.EntityNotFoundException;
-import tt.authorization.repository.RoleRepository;
-import tt.authorization.repository.UserRepository;
-import tt.authorization.transformer.UserTransformer;
-
-import java.util.Optional;
-import java.util.Set;
-
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
@@ -32,6 +19,18 @@ import static tt.authorization.helper.UserHelper.createUserRequest;
 import static tt.authorization.helper.UserHelper.defaultRole;
 import static tt.authorization.helper.UserHelper.userEntityBuilder;
 import static tt.authorization.helper.UserHelper.userInfoResponse;
+
+import java.util.Optional;
+import java.util.Set;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import tt.authorization.domain.response.UserInfoResponse;
+import tt.authorization.exception.EntityNotFoundException;
+import tt.authorization.repository.RoleRepository;
+import tt.authorization.repository.UserRepository;
+import tt.authorization.transformer.UserTransformer;
 
 class UserServiceTest {
 

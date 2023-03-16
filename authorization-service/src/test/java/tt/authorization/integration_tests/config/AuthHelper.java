@@ -1,20 +1,19 @@
 package tt.authorization.integration_tests.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.restassured.http.Cookies;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import tt.authorization.domain.request.LoginRequest;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.restassured.http.Cookies;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import tt.authorization.domain.request.LoginRequest;
 
 public class AuthHelper {
 
@@ -28,12 +27,12 @@ public class AuthHelper {
     return "http://localhost:" + port + "/api/v1";
   }
 
-  public String getResponse(String file) throws IOException {
+  public String getResponse(final String file) throws IOException {
     return new String(
         Files.readAllBytes(Paths.get("src/test/resources/integration/response/" + file)));
   }
 
-  public String getRequest(String file) throws IOException {
+  public String getRequest(final String file) throws IOException {
     return new String(
         Files.readAllBytes(Paths.get("src/test/resources/integration/request/" + file)));
   }

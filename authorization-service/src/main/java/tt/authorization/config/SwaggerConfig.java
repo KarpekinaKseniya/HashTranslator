@@ -1,12 +1,12 @@
 package tt.authorization.config;
 
+import static java.util.Arrays.asList;
+
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import static java.util.Arrays.asList;
 
 @Configuration
 public class SwaggerConfig {
@@ -23,6 +23,6 @@ public class SwaggerConfig {
 
     @Bean
     public Info info() {
-        return new Info().title("Hash Translator API").version("v1").description("Contain solution on testing task");
+        return new Info().title("Authorization API").version("v1").description("Contain solution on testing task");
     }
 }

@@ -1,6 +1,20 @@
 package tt.authorization.integration_tests;
 
+import static io.restassured.RestAssured.given;
+import static io.restassured.http.ContentType.JSON;
+import static javax.servlet.http.HttpServletResponse.SC_CREATED;
+import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
+import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
+import static javax.servlet.http.HttpServletResponse.SC_NO_CONTENT;
+import static javax.servlet.http.HttpServletResponse.SC_OK;
+import static net.javacrumbs.jsonunit.JsonMatchers.jsonStringEquals;
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
+import static tt.authorization.helper.UserHelper.loginRequest;
+
 import io.restassured.http.Cookies;
+import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +31,6 @@ import tt.authorization.domain.request.LoginRequest;
 import tt.authorization.integration_tests.config.AuthHelper;
 import tt.authorization.integration_tests.config.HSQLConfig;
 
-import java.io.IOException;
-
-import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
-import static javax.servlet.http.HttpServletResponse.SC_CREATED;
-import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
-import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
-import static javax.servlet.http.HttpServletResponse.SC_NO_CONTENT;
-import static javax.servlet.http.HttpServletResponse.SC_OK;
-import static net.javacrumbs.jsonunit.JsonMatchers.jsonStringEquals;
-import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static tt.authorization.helper.UserHelper.loginRequest;
-
 @SpringBootTest(
     classes = {AuthorizationApplication.class},
     webEnvironment = RANDOM_PORT)
@@ -39,7 +38,7 @@ import static tt.authorization.helper.UserHelper.loginRequest;
 @AutoConfigureMockMvc
 @Import(HSQLConfig.class)
 @EnableConfigurationProperties
-public class AccountIT {
+class AccountIT {
 
   private static final Long ID = 1L;
 

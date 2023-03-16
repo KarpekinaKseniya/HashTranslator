@@ -1,5 +1,23 @@
 package tt.authorization.integration_tests;
 
+import static io.restassured.RestAssured.given;
+import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
+import static javax.servlet.http.HttpServletResponse.SC_OK;
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyString;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static tt.authorization.helper.UserHelper.DEFAULT_PASSWORD;
+import static tt.authorization.helper.UserHelper.JONNY_EMAIL;
+import static tt.authorization.helper.UserHelper.loginRequest;
+
+import javax.servlet.http.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,27 +35,6 @@ import tt.authorization.domain.request.LoginRequest;
 import tt.authorization.integration_tests.config.AuthHelper;
 import tt.authorization.integration_tests.config.HSQLConfig;
 
-import javax.servlet.http.Cookie;
-
-import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
-import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
-import static javax.servlet.http.HttpServletResponse.SC_CREATED;
-import static javax.servlet.http.HttpServletResponse.SC_OK;
-import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static tt.authorization.helper.UserHelper.DEFAULT_PASSWORD;
-import static tt.authorization.helper.UserHelper.JONNY_EMAIL;
-import static tt.authorization.helper.UserHelper.loginRequest;
-
 @SpringBootTest(
     classes = {AuthorizationApplication.class},
     webEnvironment = RANDOM_PORT)
@@ -45,7 +42,7 @@ import static tt.authorization.helper.UserHelper.loginRequest;
 @AutoConfigureMockMvc
 @Import(HSQLConfig.class)
 @EnableConfigurationProperties
-public class AuthIT {
+class AuthIT {
 
   @Value("${local.server.port}")
   private int port;

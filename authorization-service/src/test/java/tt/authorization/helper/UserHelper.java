@@ -1,24 +1,23 @@
 package tt.authorization.helper;
 
+import static tt.authorization.domain.entity.ERole.ROLE_USER;
+
+import java.util.Set;
 import tt.authorization.domain.entity.Roles;
 import tt.authorization.domain.entity.User;
 import tt.authorization.domain.request.CreateUserRequest;
 import tt.authorization.domain.request.LoginRequest;
 import tt.authorization.domain.response.UserInfoResponse;
 
-import java.util.Set;
-
-import static tt.authorization.domain.entity.ERole.ROLE_USER;
-
 public class UserHelper {
 
-  public static String DEFAULT_PASSWORD = "password";
-  public static String ENCODE_PASSWORD =
+  public static final String DEFAULT_PASSWORD = "password";
+  public static final String ENCODE_PASSWORD =
       "$2a$10$r.ctB43XcviDPD0trfxdUeo7vag/N2JqnHGtXm7/sBmXjn567MEEm";
-  public static String JONNY_EMAIL = "test@gmail.ru";
+  public static final String JONNY_EMAIL = "test@gmail.ru";
 
-  private static String JONNY_FIRSTNAME = "John";
-  private static String JONNY_LASTNAME = "Test";
+  private static final String JONNY_FIRSTNAME = "John";
+  private static final String JONNY_LASTNAME = "Test";
 
   public static User.UserBuilder userEntityBuilder() {
     return User.builder()

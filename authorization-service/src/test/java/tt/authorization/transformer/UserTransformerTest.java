@@ -1,20 +1,5 @@
 package tt.authorization.transformer;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mock;
-import org.mockito.verification.VerificationMode;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import tt.authorization.domain.entity.Roles;
-import tt.authorization.domain.entity.User;
-import tt.authorization.domain.request.CreateUserRequest;
-import tt.authorization.domain.response.UserInfoResponse;
-
-import java.util.Set;
-import java.util.stream.Stream;
-
 import static java.util.Collections.emptySet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,6 +14,20 @@ import static tt.authorization.helper.UserHelper.createUserRequest;
 import static tt.authorization.helper.UserHelper.defaultRole;
 import static tt.authorization.helper.UserHelper.userEntityBuilder;
 import static tt.authorization.helper.UserHelper.userInfoResponse;
+
+import java.util.Set;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mock;
+import org.mockito.verification.VerificationMode;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import tt.authorization.domain.entity.Roles;
+import tt.authorization.domain.entity.User;
+import tt.authorization.domain.request.CreateUserRequest;
+import tt.authorization.domain.response.UserInfoResponse;
 
 class UserTransformerTest {
 
