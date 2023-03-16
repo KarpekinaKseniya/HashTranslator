@@ -86,7 +86,11 @@ public class WebSecurityConfig {
     http.cors(CorsConfigurer::disable)
         .csrf(CsrfConfigurer::disable).
         authorizeRequests(
-            auth -> auth.antMatchers(API + "/auth/**").permitAll()
+            auth -> auth
+                .antMatchers(POST, API + "/auth").authenticated()
+                .antMatchers(POST,API + "/auth/login").permitAll()
+                .antMatchers(POST,API + "/auth/logout").permitAll()
+                .antMatchers(POST,API + "/auth/token/refresh").permitAll()
                 .antMatchers(GET, API + "/account/{\\d+}").access(ALL_ROLES)
                 .antMatchers(DELETE, API + "/account/{\\d+}").access(ADMIN_ROLE)
                 .antMatchers(POST, API + "/account").access(ADMIN_ROLE)

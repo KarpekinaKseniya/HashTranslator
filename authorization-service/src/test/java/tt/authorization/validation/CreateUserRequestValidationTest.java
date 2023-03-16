@@ -24,6 +24,7 @@ import tt.authorization.domain.request.CreateUserRequest;
 class CreateUserRequestValidationTest {
 
   private static final String BIG_STRING = StringUtils.repeat("*", 100);
+  private static final String VALID_PASSWORD = "Tyk1:21@1!des";
 
   private Validator validator;
 
@@ -109,7 +110,7 @@ class CreateUserRequestValidationTest {
         .email(JONNY_EMAIL)
         .firstname("Jonny")
         .lastname("Test")
-        .password("Tyk1:21@1!des")
+        .password(VALID_PASSWORD)
         .role(Set.of(ROLE_USER));
   }
 }

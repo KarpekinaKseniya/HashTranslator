@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,9 @@ public class AuthInterceptor implements HandlerInterceptor {
       final Object handler) {
     final Cookie cookie = findCookie(request);
     final String responseCookie = transformToResponseCookie(cookie).toString();
-    final HttpEntity<String> httpEntity = new HttpEntity<>(responseCookie);
+    final HttpHeaders headers = new HttpHeaders();
+    headers.add("COOKIE", responseCookie);
+    final HttpEntity<String> httpEntity = new HttpEntity<>(headers);
     final ResponseEntity<Void> authResponse = client.exchange(authUrl, POST, httpEntity,
         Void.class);
     if (authResponse.getStatusCode().value() != OK.value()) {
