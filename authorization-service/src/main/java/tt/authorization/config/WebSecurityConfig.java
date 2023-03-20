@@ -11,6 +11,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,6 +33,7 @@ import tt.authorization.config.jwt.JwtUtils;
 import tt.authorization.service.auth.UserDetailsServiceImpl;
 
 @Configuration
+@AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
 
@@ -42,13 +44,6 @@ public class WebSecurityConfig {
   private final RsaProperties rsaKeys;
   private final JwtUtils jwtUtils;
   private final UserDetailsServiceImpl userDetailsService;
-
-  public WebSecurityConfig(final RsaProperties rsaKeys, final JwtUtils jwtUtils,
-      final UserDetailsServiceImpl userDetailsService) {
-    this.rsaKeys = rsaKeys;
-    this.jwtUtils = jwtUtils;
-    this.userDetailsService = userDetailsService;
-  }
 
   @Bean
   public BCryptPasswordEncoder passwordEncoder() {

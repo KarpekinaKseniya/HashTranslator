@@ -2,6 +2,7 @@ package tt.authorization.integration_tests;
 
 import static io.restassured.RestAssured.given;
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
+import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -56,7 +57,8 @@ class AuthIT {
   @Value("${app.jwtCookieAgeSec}")
   private int jwtCookieAgeSec;
 
-  @Autowired private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
   private AuthHelper testHelper;
 
@@ -105,7 +107,8 @@ class AuthIT {
     testHelper
         .login(LoginRequest.builder().build(), port)
         .andExpect(jsonPath("$.statusCode", equalTo(SC_BAD_REQUEST)))
-        .andExpect(jsonPath("$.message", equalTo("Email must not be blank, Password must not be blank")))
+        .andExpect(
+            jsonPath("$.message", equalTo("Email must not be blank, Password must not be blank")))
         .andExpect(jsonPath("$.description", notNullValue()));
   }
 
@@ -130,6 +133,28 @@ class AuthIT {
     given()
         .cookies(testHelper.loginAndReturnCookies(loginRequest(), port))
         .post(testHelper.buildRequestUrlStr(port) + "/auth/token/refresh")
+        .then()
+        .assertThat()
+        .statusCode(SC_OK);
+  }
+
+  @Test
+  void shouldReturnErrorWhenNotAuth() {
+    given()
+        .post(testHelper.buildRequestUrlStr(port) + "/auth")
+        .then()
+        .assertThat()
+        .statusCode(SC_FORBIDDEN);
+  }
+
+  @Test
+  @Sql(
+      executionPhase = BEFORE_TEST_METHOD,
+      scripts = {"classpath:integration/db/db_cleanup.sql", "classpath:integration/db/db_data.sql"})
+  void shouldReturnOkWhenIsAuth() {
+    given()
+        .cookies(testHelper.loginAndReturnCookies(loginRequest(), port))
+        .post(testHelper.buildRequestUrlStr(port) + "/auth")
         .then()
         .assertThat()
         .statusCode(SC_OK);

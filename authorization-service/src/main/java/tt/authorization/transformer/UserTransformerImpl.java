@@ -1,6 +1,7 @@
 package tt.authorization.transformer;
 
 import java.util.Set;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import tt.authorization.domain.entity.Roles;
@@ -9,13 +10,10 @@ import tt.authorization.domain.request.CreateUserRequest;
 import tt.authorization.domain.response.UserInfoResponse;
 
 @Component
+@AllArgsConstructor
 public class UserTransformerImpl implements UserTransformer {
 
   private final PasswordEncoder encoder;
-
-  public UserTransformerImpl(final PasswordEncoder encoder) {
-    this.encoder = encoder;
-  }
 
   @Override
   public User userRequestToEntity(final CreateUserRequest request, final Set<Roles> roles) {

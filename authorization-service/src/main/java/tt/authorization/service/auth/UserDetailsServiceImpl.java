@@ -1,5 +1,6 @@
 package tt.authorization.service.auth;
 
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,12 +10,10 @@ import tt.authorization.domain.entity.User;
 import tt.authorization.repository.UserRepository;
 
 @Service
+@AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-  private final UserRepository userRepository;
 
-  public UserDetailsServiceImpl(final UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
+  private final UserRepository userRepository;
 
   @Override
   @Transactional
