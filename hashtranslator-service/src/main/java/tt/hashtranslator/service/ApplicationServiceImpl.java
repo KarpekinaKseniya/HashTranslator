@@ -29,14 +29,14 @@ public class ApplicationServiceImpl implements ApplicationService {
 
   @Transactional
   @Override
-  public String create(final ApplicationRequest request) {
+  public Long create(final ApplicationRequest request) {
     final Application saved = repository.save(transformer.requestToEntity(request));
     decoderService.decode(saved);
     return saved.getId();
   }
 
   @Override
-  public ApplicationResponse findById(final String id) {
+  public ApplicationResponse findById(final Long id) {
     return transformer.entityToResponse(
         repository
             .findById(id)

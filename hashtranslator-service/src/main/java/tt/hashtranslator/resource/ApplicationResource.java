@@ -38,7 +38,7 @@ public class ApplicationResource {
       @ApiResponse(responseCode = "406", description = "Not Acceptable", content = @Content),
       @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))})
   @PostMapping
-  public ResponseEntity<String> send(@Valid @RequestBody final ApplicationRequest request) {
+  public ResponseEntity<Long> send(@Valid @RequestBody final ApplicationRequest request) {
     return new ResponseEntity<>(service.create(request), ACCEPTED);
   }
 
@@ -51,7 +51,7 @@ public class ApplicationResource {
       @ApiResponse(responseCode = "406", description = "Not Acceptable", content = @Content),
       @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))})
   @GetMapping("/{id}")
-  public ResponseEntity<ApplicationResponse> get(@PathVariable final String id) {
+  public ResponseEntity<ApplicationResponse> get(@PathVariable final Long id) {
     return ok(service.findById(id));
   }
 }

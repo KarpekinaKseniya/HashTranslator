@@ -42,10 +42,10 @@ public class DecoderServiceImpl implements DecoderService {
   @Async
   @Override
   public void decode(final Application application) {
-    final List<String> request = application.getHashes();
+    final List<String> request = application.getHashes().stream().map(String::toLowerCase)
+        .collect(toList());
     final List<String> resultHashes =
         Flux.fromIterable(request)
-            .map(String::toLowerCase)
             .flatMap(this::sendHashesToDecoder)
             .collect(toList())
             .share()
