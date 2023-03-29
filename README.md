@@ -88,7 +88,8 @@ docker-compose build
 
 Local:
 
-+ http://localhost:8080/swagger-ui/index.html
++ auth: http://localhost:8080/swagger-ui/index.html
++ hash-translator: http://localhost:8085/swagger-ui/index.html
 
 ## Contact
 
