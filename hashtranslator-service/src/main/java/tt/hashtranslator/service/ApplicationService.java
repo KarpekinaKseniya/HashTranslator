@@ -5,7 +5,7 @@ import tt.hashtranslator.domain.response.ApplicationResponse;
 
 public interface ApplicationService {
 
-  String create(ApplicationRequest request);
+  Long create(ApplicationRequest request);
 
-  ApplicationResponse findById(String id);
+  ApplicationResponse findById(Long id);
 }

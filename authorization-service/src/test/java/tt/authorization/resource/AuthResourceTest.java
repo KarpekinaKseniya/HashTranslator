@@ -10,6 +10,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.ResponseEntity.ok;
 import static tt.authorization.helper.UserHelper.loginRequest;
 
@@ -27,8 +28,10 @@ class AuthResourceTest {
   private static final String LOGOUT_MESSAGE = "You've been sighed out!";
   private static final String REFRESH_TOKEN_MESSAGE = "Token is refreshed successfully!";
 
-  @Mock private TokenService tokenService;
-  @InjectMocks private AuthResource authResource;
+  @Mock
+  private TokenService tokenService;
+  @InjectMocks
+  private AuthResource authResource;
 
   @BeforeEach
   void setup() {
@@ -81,5 +84,11 @@ class AuthResourceTest {
     assertThat(actual, is(ok().header(SET_COOKIE, refreshToken).body(REFRESH_TOKEN_MESSAGE)));
 
     then(tokenService).should(only()).findByToken(request);
+  }
+
+  @Test
+  void shouldCheckIsAuth() {
+    final ResponseEntity<Void> isAuth = authResource.checkAuth();
+    assertThat(isAuth, is(new ResponseEntity<>(OK)));
   }
 }

@@ -5,4 +5,4 @@ import org.springframework.stereotype.Repository;
 import tt.hashtranslator.domain.entity.Application;
 
 @Repository
-public interface ApplicationRepository extends MongoRepository<Application, String> {}
+public interface ApplicationRepository extends MongoRepository<Application, Long> {}

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,16 +21,13 @@ import tt.authorization.domain.response.ErrorResponse;
 import tt.authorization.service.TokenService;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("api/v1/auth")
 public class AuthResource {
 
   private static final String LOGOUT_MESSAGE = "You've been sighed out!";
   private static final String REFRESH_TOKEN_MESSAGE = "Token is refreshed successfully!";
   private final TokenService tokenService;
-
-  public AuthResource(final TokenService tokenService) {
-    this.tokenService = tokenService;
-  }
 
   @Operation(summary = "Login", description = "Endpoint for sign in", responses = {
       @ApiResponse(responseCode = "200", description = "Login Success"),

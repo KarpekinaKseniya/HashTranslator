@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import javax.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,14 +25,11 @@ import tt.authorization.domain.response.UserInfoResponse;
 import tt.authorization.service.UserService;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/v1/account")
 public class AccountResource {
 
   private final UserService userService;
-
-  public AccountResource(final UserService userService) {
-    this.userService = userService;
-  }
 
   @Operation(summary = "Get User info by id", description = "Endpoint for getting user info by id", responses = {
       @ApiResponse(responseCode = "200", description = "Ok"),
