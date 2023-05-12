@@ -18,6 +18,8 @@ decoder:
   connect:
     timeout:
       ms: ${DECODER_CONNECT_TIMEOUT_MS:60000}
+  min:
+    calls: ${DECODER_MIN_CALLS:5}
 hash:
   type: ${HASH_TYPE:md5}
   path: ${HASH_PATH:/api.php}
@@ -36,3 +38,9 @@ springdoc:
 jwt:
   cookie:
     name: ${JWT_COOKIE_NAME:test}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      decoderService:
+        slidingWindowType: COUNT_BASED
