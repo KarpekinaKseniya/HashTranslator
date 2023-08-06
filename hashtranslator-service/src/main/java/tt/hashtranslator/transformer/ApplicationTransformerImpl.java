@@ -1,12 +1,15 @@
 package tt.hashtranslator.transformer;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.stereotype.Component;
 import tt.hashtranslator.domain.entity.Application;
 import tt.hashtranslator.domain.request.ApplicationRequest;
 import tt.hashtranslator.domain.response.ApplicationResponse;
 import tt.hashtranslator.domain.response.HashResponse;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static tt.hashtranslator.domain.entity.Status.ACCEPTED;
 
 @Component
 public class ApplicationTransformerImpl implements ApplicationTransformer {
@@ -21,6 +24,7 @@ public class ApplicationTransformerImpl implements ApplicationTransformer {
     if (!hashes.isEmpty()) {
       application.setHashes(hashes);
     }
+    application.setStatus(ACCEPTED);
     return application;
   }
 
@@ -46,6 +50,7 @@ public class ApplicationTransformerImpl implements ApplicationTransformer {
       }
       response.setFailedHashes(failedResponse);
     }
+    response.setStatus(application.getStatus());
     return response;
   }
 }

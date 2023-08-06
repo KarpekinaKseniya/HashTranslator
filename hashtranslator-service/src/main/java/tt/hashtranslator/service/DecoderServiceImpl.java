@@ -19,6 +19,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpStatus.OK;
 import static reactor.core.publisher.Mono.just;
+import static tt.hashtranslator.domain.entity.Status.DECODED;
 
 @Slf4j
 @Service
@@ -56,6 +57,7 @@ public class DecoderServiceImpl implements DecoderService {
     final Mono<List<String>> failed = resultHashes.filter(request::contains).collectList();
     final Mono<List<String>> success =
         resultHashes.filter(hash -> !request.contains(hash)).collectList();
+    application.setStatus(DECODED);
     success
         .publishOn(Schedulers.boundedElastic())
         .map(

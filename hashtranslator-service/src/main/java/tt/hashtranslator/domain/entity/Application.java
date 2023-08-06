@@ -18,6 +18,7 @@ public class Application {
   public static final String SEQUENCE_NAME = "custom_sequence";
   @Id
   private Long id;
+  private Status status;
   private List<String> hashes;
   private List<String> successResult;
   private List<String> failedResult;
